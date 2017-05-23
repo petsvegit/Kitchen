@@ -1,0 +1,8 @@
+version: '2'
+
+services:
+  kitchenapi:
+    image: kitchenapi
+    build:
+      context: ./KitchenAPI
+      dockerfile: Dockerfile
