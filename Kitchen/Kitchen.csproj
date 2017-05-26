@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="mongocsharpdriver" Version="2.4.3" />
     <PackageReference Include="RestSharp.NetCore" Version="105.2.3" />
   </ItemGroup>
 

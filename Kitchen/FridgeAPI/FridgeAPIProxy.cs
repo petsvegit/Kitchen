@@ -14,7 +14,7 @@ namespace Kitchen.FridgeAPI
 
         public FridgeAPIProxy()
         {
-            _fridgeClient = new RestClient("http://localhost:14589");
+            _fridgeClient = new RestClient("http://localhost:1492");
         }
         
         static Task<IRestResponse> GetResponseContentAsync(RestClient theClient, RestRequest theRequest)

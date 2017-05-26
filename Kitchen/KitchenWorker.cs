@@ -8,12 +8,19 @@ namespace Kitchen
 {
     public class KitchenWorker
     {
-        public List<Recipe> KitchenRecipes = new List<Recipe>();
+
+        private readonly IKitchenRepository _kitchenRepo;
+        
+        public KitchenWorker()
+        {
+            _kitchenRepo = new KitchenRepository();
+        }
+
 
         public bool AddRecipe(Recipe newRecipe)
         {
             if (ValidateRecipe(newRecipe) == false) { return false; }
-            KitchenRecipes.Add(newRecipe);
+            _kitchenRepo.AddRecipe(newRecipe);
             return true;
         }
 
@@ -31,12 +38,12 @@ namespace Kitchen
 
         public Recipe GetRecipe(string name)
         {
-            return KitchenRecipes.FirstOrDefault(recipeToCheck => recipeToCheck.Name.Equals(name));
+            return _kitchenRepo.GetRecipe(name);
         }
 
         private List<Recipe> PossibleRecipes()
         {
-            List<Recipe> availableRecipes = KitchenRecipes.FindAll(recipeToReturn => recipeToReturn.Available.Equals(true));
+            List<Recipe> availableRecipes = _kitchenRepo.GetAvailableRecipes();
             List<Recipe> possibleRecipes = new List<Recipe>();
 
             foreach (var recipe in availableRecipes)
