@@ -26,7 +26,7 @@ namespace KitchenAPI.Controllers
         }
 
         // GET api/values/5
-        [HttpGet("{id}")]
+        [HttpGet("{recipeName}")]
         public Recipe Get(string recipeName)
         {
             return _kitchenWorker.GetRecipe(recipeName);
