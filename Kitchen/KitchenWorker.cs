@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Kitchen.FridgeAPI;
@@ -34,6 +35,14 @@ namespace Kitchen
         {
             if (newRecipeIngredientsAndQuantity.Count == 0) { return false; }
             return newRecipeIngredientsAndQuantity.All(item => item.Key != null);
+        }
+
+        public void PrepareOrder(List<OrderItem> order)
+        {
+            foreach (OrderItem orderItem in order)
+            {
+                PrepareMeal(orderItem.MealName, orderItem.Quantity);
+            }
         }
 
         public Recipe GetRecipe(string name)
@@ -97,7 +106,7 @@ namespace Kitchen
             foreach (var ingredientAndQuantity in recipe.IngredientsAndQuantity)
             {
                 quantity = ingredientAndQuantity.Value * noOfMeals;
-                proxy.TakeItemFromFridge(mealName, new FridgeInventoryItemContract(mealName, quantity));
+                proxy.TakeItemFromFridge(ingredientAndQuantity.Key, new FridgeInventoryItemContract(ingredientAndQuantity.Key, quantity));
             }
 
             return true;

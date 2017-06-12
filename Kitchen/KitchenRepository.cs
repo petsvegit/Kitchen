@@ -37,7 +37,7 @@ namespace Kitchen
 
         private IMongoDatabase GetMongoConnection()
         {
-            string connectionString = "mongodb://localhost:49155";
+            string connectionString = "mongodb://172.30.81.251:49155";
 
             MongoClientSettings settings = MongoClientSettings.FromUrl(new MongoUrl(connectionString));
 

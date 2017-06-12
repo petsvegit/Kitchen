@@ -35,8 +35,9 @@ namespace KitchenAPI.Controllers
 
         // POST api/values
         [HttpPost]
-        public void Post([FromBody]string value)
+        public void Post([FromBody]List<OrderItem> order)
         {
+            _kitchenWorker.PrepareOrder(order);
         }
 
         // PUT api/values/5

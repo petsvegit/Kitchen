@@ -287,6 +287,35 @@ namespace KitchenUnitTester
             Assert.AreEqual(false, result);
         }
 
+        [TestMethod]
+        public void Integration_FromKitchenWithAvailabileMealPrepareOrder()
+        {
+            KitchenWorker currentKitchen = new KitchenWorker();
+
+            Recipe newRecipe = new Recipe();
+            newRecipe.Name = "SausageStroganoff";
+            newRecipe.Available = true;
+            newRecipe.IngredientsAndQuantity.Add(new KeyValuePair<string, double>("Sausage", 1));
+            newRecipe.IngredientsAndQuantity.Add(new KeyValuePair<string, double>("Cream", 2.5));
+            newRecipe.IngredientsAndQuantity.Add(new KeyValuePair<string, double>("Tomato puree", 2));
+            currentKitchen.AddRecipe(newRecipe);
+
+            newRecipe = new Recipe();
+            newRecipe.Name = "VeggieStroganoff";
+            newRecipe.Available = true;
+            newRecipe.IngredientsAndQuantity.Add(new KeyValuePair<string, double>("VeggieSausage", 1));
+            newRecipe.IngredientsAndQuantity.Add(new KeyValuePair<string, double>("Cream", 2.5));
+            newRecipe.IngredientsAndQuantity.Add(new KeyValuePair<string, double>("Tomato puree", 2));
+            currentKitchen.AddRecipe(newRecipe);
+
+            List<OrderItem> newOrder = new List<OrderItem>();
+            newOrder.Add(new OrderItem("SausageStroganoff", 2));
+            newOrder.Add(new OrderItem("VeggieStroganoff", 1));
+
+            currentKitchen.PrepareOrder(newOrder);
+
+            Assert.AreEqual(false, true);
+        }
 
 
         //[TestMethod]
