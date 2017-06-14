@@ -11,10 +11,19 @@ namespace Kitchen
     {
 
         private readonly IKitchenRepository _kitchenRepo;
-        
+        private readonly IFridgeAPIProxy _fridgeApiProxy;
+
+
         public KitchenWorker()
         {
             _kitchenRepo = new KitchenRepository();
+            _fridgeApiProxy = new FridgeAPIProxy();
+        }
+
+        public KitchenWorker(IKitchenRepository kitchenRepo, IFridgeAPIProxy fridgeApiProxy)
+        {
+            _kitchenRepo = kitchenRepo;
+            _fridgeApiProxy = fridgeApiProxy;
         }
 
 
@@ -83,11 +92,10 @@ namespace Kitchen
 
         private bool IsRecepieAvailableFromFridge(Recipe recipe, int noOfMeals)
         {
-            IFridgeAPIProxy proxy = new FridgeAPIProxy();
 
             foreach (var ingredientAndQuantity in recipe.IngredientsAndQuantity)
             {
-                if (proxy.IsItemAvaiable(ingredientAndQuantity.Key, ingredientAndQuantity.Value * noOfMeals) == false) { return false; }
+                if (_fridgeApiProxy.IsItemAvaiable(ingredientAndQuantity.Key, ingredientAndQuantity.Value * noOfMeals) == false) { return false; }
             }
             return true;
         }
@@ -100,13 +108,12 @@ namespace Kitchen
             if (recipe.Available == false) { return false; }
             if (IsRecepieAvailableFromFridge(recipe, noOfMeals) == false) { return false; }
 
-            IFridgeAPIProxy proxy = new FridgeAPIProxy();
             double quantity;
 
             foreach (var ingredientAndQuantity in recipe.IngredientsAndQuantity)
             {
                 quantity = ingredientAndQuantity.Value * noOfMeals;
-                proxy.TakeItemFromFridge(ingredientAndQuantity.Key, new FridgeInventoryItemContract(ingredientAndQuantity.Key, quantity));
+                _fridgeApiProxy.TakeItemFromFridge(ingredientAndQuantity.Key, new FridgeInventoryItemContract(ingredientAndQuantity.Key, quantity));
             }
 
             return true;
